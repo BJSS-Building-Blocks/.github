@@ -1,0 +1,5 @@
+{
+    "name": "Generate Docs",
+    "description": "A workflow to generate automatic documentation in the repo README file",
+    "iconName": "octicon container"
+}
