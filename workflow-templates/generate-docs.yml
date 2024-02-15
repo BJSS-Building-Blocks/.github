@@ -1,0 +1,30 @@
+name: Generate documentation
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  update-readme:
+    name: Update README
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update README from action.yml
+        uses: larmitage-bjss/fork-action-docs-action@main
+
+      - name: Update README with example
+        run: npx embedme README.md
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Automatically generated readme changes
