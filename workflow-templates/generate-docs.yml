@@ -1,30 +1,19 @@
-name: Generate documentation
+name: Automatically generate documentation
+
+# This workflow automatically generates documentation as dictated by control comments within the given markdown file
+# * Set the input `readme` to specify which markdown file to update. Default `README.md`
+# * Set the input `actionFilesPattern` to specify which action or workflow files are to be documented in the file. Default `action.yml`
 
 on:
   pull_request:
     branches:
       - main
-  push:
-    branches:
-      - main
+
+permissions:
+  contents: write
 
 jobs:
   update-readme:
-    name: Update README
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Update README from action.yml
-        uses: larmitage-bjss/fork-action-docs-action@main
-
-      - name: Update README with example
-        run: npx embedme README.md
-
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: Automatically generated readme changes
+    uses: BJSS-Building-Blocks/devops/.github/workflows/generate-docs.yml@generate-docs-reusable-workflow
+    with:
+      actionFilesPattern: .github/workflows/*.yml
