@@ -1,13 +1,15 @@
 name: Automatically generate documentation
 
 # This workflow automatically generates documentation as dictated by control comments within the given markdown file
-# * Set the input `readme` to specify which markdown file to update. Default `README.md`
-# * Set the input `actionFilesPattern` to specify which action or workflow files are to be documented in the file. Default `action.yml`
+# Triggered on pull requests targeting the default branch, updates the pull request with new commits for the changes
+# Job inputs:
+# * `readme` to specify which markdown file to update. Default `README.md`
+# * `actionFilesPattern` to specify which action or workflow files are to be documented in the file. Default `action.yml`
 
 on:
   pull_request:
     branches:
-      - main
+      - $default-branch
 
 permissions:
   contents: write
