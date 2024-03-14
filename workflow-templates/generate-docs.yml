@@ -4,7 +4,7 @@ name: Automatically generate documentation
 # Triggered on pull requests targeting the default branch, updates the pull request with new commits for the changes
 # Job inputs:
 # * `readme` to specify which markdown file to update. Default `README.md`
-# * `actionFilesPattern` to specify which action or workflow files are to be documented in the file. Default `action.yml`
+# * `source-files-pattern` to specify which action or workflow files are to be documented in the file. Default `action.yml`
 
 on:
   pull_request:
@@ -18,4 +18,4 @@ jobs:
   update-readme:
     uses: BJSS-Building-Blocks/devops/.github/workflows/generate-docs.yml@main
     with:
-      actionFilesPattern: .github/workflows/*.yml
+      source-files-pattern: .github/workflows/*.yml
