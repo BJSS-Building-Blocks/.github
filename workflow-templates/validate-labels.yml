@@ -1,0 +1,19 @@
+name: Validate labels
+
+# This workflow validates labels on the PR
+
+on:
+  pull_request:
+    branches: 
+      - $default-branch
+    types: 
+      # default pull_request triggers, plus `labeled` and `unlabeled`
+      - opened
+      - synchronize
+      - reopened
+      - labeled
+      - unlabeled
+
+jobs:
+  validate-tag:
+    uses: BJSS-Building-Blocks/devops/.github/workflows/enforce-version-labels.yml@v0

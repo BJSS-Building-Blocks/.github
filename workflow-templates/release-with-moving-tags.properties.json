@@ -1,0 +1,5 @@
+{
+    "name": "Create release and move major/minor tags",
+    "description": "Creates a release and moves major/minor tags",
+    "iconName": "octicon tag"
+}

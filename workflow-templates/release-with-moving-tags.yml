@@ -1,0 +1,31 @@
+name: Create release and move major/minor tags
+
+# This workflow creates a release when changes are merged into main
+
+on:
+  push:
+    branches:
+      - $default-branch
+
+concurrency:
+  group: create-release
+
+permissions:
+  contents: write
+
+jobs:
+  determine-version:
+    uses: BJSS-Building-Blocks/devops/.github/workflows/determine-version.yml@v0
+
+  create-release:
+    needs: [ determine-version ]
+    uses: BJSS-Building-Blocks/devops/.github/workflows/create-release.yml@v0
+    with:
+      version: ${{ needs.determine-version.outputs.version }}
+
+  create-moving-major-tag:
+    needs: [ determine-version, create-release ]
+    uses: BJSS-Building-Blocks/devops/.github/workflows/create-major-minor-tags.yml@v0
+    with:
+      major-version: ${{ needs.determine-version.outputs.major }}
+      minor-version: ${{ needs.determine-version.outputs.minor }}

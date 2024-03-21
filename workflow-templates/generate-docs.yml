@@ -16,6 +16,6 @@ permissions:
 
 jobs:
   update-readme:
-    uses: BJSS-Building-Blocks/devops/.github/workflows/generate-docs.yml@main
+    uses: BJSS-Building-Blocks/devops/.github/workflows/generate-docs.yml@v0
     with:
       source-files-pattern: .github/workflows/*.yml
