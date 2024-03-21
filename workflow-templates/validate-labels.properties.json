@@ -1,0 +1,5 @@
+{
+    "name": "Validate labels",
+    "description": "Validates that a PR has required labels before merging",
+    "iconName": "octicon tag"
+}
