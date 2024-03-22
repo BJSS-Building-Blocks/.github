@@ -4,9 +4,9 @@ name: Validate labels
 
 on:
   pull_request:
-    branches: 
+    branches:
       - $default-branch
-    types: 
+    types:
       # default pull_request triggers, plus `labeled` and `unlabeled`
       - opened
       - synchronize
