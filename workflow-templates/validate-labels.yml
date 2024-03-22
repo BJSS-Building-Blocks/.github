@@ -15,5 +15,6 @@ on:
       - unlabeled
 
 jobs:
-  validate-tag:
+  enforce-version-labels:
+    name: Enforce Version Labels
     uses: BJSS-Building-Blocks/devops/.github/workflows/enforce-version-labels.yml@v0
