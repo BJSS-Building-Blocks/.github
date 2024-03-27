@@ -7,7 +7,7 @@ name: Create release and move major/minor tags
 # All jobs must be conditional on ${{ github.event.pull_request.merged }}
 on:
   pull_request:
-    branches: 
+    branches:
       - $default-branch
     types:
       - closed
@@ -21,19 +21,19 @@ permissions:
 jobs:
   determine-version:
     if: ${{ github.event.pull_request.merged }}
-    uses: BJSS-Building-Blocks/devops/.github/workflows/determine-version.yml@v0
+    uses: BJSS-Building-Blocks/devops/.github/workflows/determine-version.yml@v1
 
   create-release:
     needs: [ determine-version ]
     if: ${{ github.event.pull_request.merged }}
-    uses: BJSS-Building-Blocks/devops/.github/workflows/create-release.yml@v0
+    uses: BJSS-Building-Blocks/devops/.github/workflows/create-release.yml@v1
     with:
       version: ${{ needs.determine-version.outputs.version }}
 
   create-moving-major-tag:
     needs: [ determine-version, create-release ]
     if: ${{ github.event.pull_request.merged }}
-    uses: BJSS-Building-Blocks/devops/.github/workflows/create-major-minor-tags.yml@v0
+    uses: BJSS-Building-Blocks/devops/.github/workflows/create-major-minor-tags.yml@v1
     with:
       major-version: ${{ needs.determine-version.outputs.major }}
       minor-version: ${{ needs.determine-version.outputs.minor }}
