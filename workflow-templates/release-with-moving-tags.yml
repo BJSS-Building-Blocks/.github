@@ -2,10 +2,15 @@ name: Create release and move major/minor tags
 
 # This workflow creates a release when changes are merged into main
 
+# This is a hack to run on merge of a PR into main
+# as we do not get PR details when triggering on push to main
+# All jobs must be conditional on ${{ github.event.pull_request.merged }}
 on:
-  push:
+  pull_request:
     branches:
       - $default-branch
+    types:
+      - closed
 
 concurrency:
   group: create-release
@@ -15,17 +20,20 @@ permissions:
 
 jobs:
   determine-version:
-    uses: BJSS-Building-Blocks/devops/.github/workflows/determine-version.yml@v0
+    if: ${{ github.event.pull_request.merged }}
+    uses: BJSS-Building-Blocks/devops/.github/workflows/determine-version.yml@v1
 
   create-release:
     needs: [ determine-version ]
-    uses: BJSS-Building-Blocks/devops/.github/workflows/create-release.yml@v0
+    if: ${{ github.event.pull_request.merged }}
+    uses: BJSS-Building-Blocks/devops/.github/workflows/create-release.yml@v1
     with:
       version: ${{ needs.determine-version.outputs.version }}
 
   create-moving-major-tag:
     needs: [ determine-version, create-release ]
-    uses: BJSS-Building-Blocks/devops/.github/workflows/create-major-minor-tags.yml@v0
+    if: ${{ github.event.pull_request.merged }}
+    uses: BJSS-Building-Blocks/devops/.github/workflows/create-major-minor-tags.yml@v1
     with:
       major-version: ${{ needs.determine-version.outputs.major }}
       minor-version: ${{ needs.determine-version.outputs.minor }}
